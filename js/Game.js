@@ -6,9 +6,9 @@
 1   `Game` JS class created to handle various aspects of the `phrase Hunter` game.
 2   `Game` class constructor created with 3 properties
 2.1 `missed` property to store the number of times guessed wrong.
-2.2 `phrases` property contains the 6 phrases used in the game.
-2.3 `activePhrase` property stores the phrase currently in play.
-3   `startGame` method will reset the game and set up the game screen with a random phrase and initiate the `phrase` class.
+2.2 `phrases` property contains the initiates a new `Phrase` class for each phrase used in the game.
+2.3 `activePhrase` property stores the `Phrase` class currently in play.
+3   `startGame` method will reset the game and set up the game screen with a random phrase.
 4   `getRandomPhrase` method slects a random phrase which has not already been displayed.
 5   `checkPhraseDisplayed` checks if all phrases hadd been displayed atleast once. if true it sets the `phrase Displayed`
     variable to 0;
@@ -23,19 +23,18 @@
 11  `resetPhrase` method removes the phrase from the previous game.
 12  `resetLives` sets the game missed property back to 0.
 13  `resetbtn` removes the disabled button and chosen class applied to keys from the previous game.
-
-
 */
 
 class Game {                //1
   constructor() {                 //2
    this.missed = 0;                                                                         //2.1
-   this.phrases = ['I tried to embrace my inner child today and the little brat bit me',    //2.2
-    'To drink responsibly is not spill it',
-    'Life is a soup and I am a fork',
-    'The short answer is no and the long answer is oh hell no',
-    'If I send you my ugly selfies our friendship is real',
-    'Welcome to the dark side where all the fun stuff happens'
+   this.phrases = [
+    new Phrase('I tried to embrace my inner child today and the little brat bit me'),    //2.2
+    new Phrase('To drink responsibly is not spill it'),
+    new Phrase('Life is a soup and I am a fork'),
+    new Phrase('The short answer is no and the long answer is oh hell no'),
+    new Phrase('If I send you my ugly selfies our friendship is real'),
+    new Phrase('Welcome to the dark side where all the fun stuff happens')
   ];
   this.activePhrase = null;                                                                 //2.3
   this.phraseDisplayed = [];
@@ -45,16 +44,16 @@ class Game {                //1
     this.resetGame();
     overlay.style.display = 'none';
     this.activePhrase = this.getRandomPhrase();
-    phrase = new Phrase(this.activePhrase)
-    phrase.addPhraseToDisplay();
+    this.activePhrase.addPhraseToDisplay();
   }
 
   getRandomPhrase() {                                               //4
-    i = Math.floor(Math.random() * (this.phrases.length + 1));
-    while ( this.checkPhraseDisplayed(i) != true) {
+    i = Math.floor(Math.random() * (this.phrases.length));
+    while ( this.checkPhraseDisplayed(i) != true ) {
       console.log(this.checkPhraseDisplayed(i))
-      i = Math.floor(Math.random() * (this.phrases.length + 1));
+      i = Math.floor(Math.random() * (this.phrases.length));
     }
+    console.log(i)
     return this.phrases[i];
   }
 
