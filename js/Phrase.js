@@ -29,6 +29,8 @@ var letterFound, i, missed, letter;
     screen button for it.
 4.3 using loop this statement checks the letter inputed by user is in the phrase and sets letterFound variable and shows
     the matched letter every where in the phrase on screen
+4.4 using conditional and loop statement the program disables the key pressed by user. if letter is found it applies the
+    chosen class else the wrong class
 5   `showMatchedLetter` method takes user input character as a parameter and if letter id found it displays the character
     everywhere it appears in the phrase on screen.
 */
@@ -59,35 +61,39 @@ class Phrase {                                  //1
   checkLetter(event) {                              //4
     letterFound = '';
     if (event.type == 'click') {                        //4.1
-      event.target.setAttribute('disabled', true);
-      event.target.classList.add('chosen');
       letter = event.target.textContent;
     } else {                                        //4.2
-      for ( i = 0; i < key.length; i++) {
-        if ( event.key == key[i].textContent ) {
-          if ( key[i].classList.contains('chosen') == true ) {
-            return letterFound = true
-          } else {
-            key[i].setAttribute('disabled', true);
-            key[i].classList.add('chosen');
-            letter = event.key;
-          }
-        }
-      }
+      letter = event.key;
     }
+
     this.phrase.forEach((char, i) => {                      //4.3
       if ( letter.toLowerCase() == char.toLowerCase() ) {
         this.showMatchedLetter(char);
         return letterFound = true;
       }
     })
+
+    if ( letterFound ) {                          //4.4
+      for ( i = 0; i < key.length; i++) {
+        if  (key[i].textContent == letter.toLowerCase() ) {
+          key[i].setAttribute('disabled', true);
+          key[i].classList.add('chosen');
+        }
+      }
+    } else {
+      for ( i = 0; i < key.length; i++) {
+        if  (key[i].textContent == letter.toLowerCase() ) {
+          key[i].setAttribute('disabled', true);
+          key[i].classList.add('wrong');
+        }
+      }
+    }
   }
 
   showMatchedLetter(char) {                                 //5
     for ( var i = 0; i < guessChar.length; i++ ) {
       if ( guessChar[i].textContent == char ) {
         guessChar[i].className += ' show';
-
       }
     }
   }

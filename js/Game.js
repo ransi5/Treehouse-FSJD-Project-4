@@ -22,7 +22,7 @@
 10  checks if `missed` property is equal to 5. if true it shows the end game screen.
 11  `resetPhrase` method removes the phrase from the previous game.
 12  `resetLives` sets the game missed property back to 0.
-13  `resetbtn` removes the disabled button and chosen class applied to keys from the previous game.
+13  `resetbtn` removes the disabled button and chosen or wrong class applied to keys from the previous game.
 */
 
 class Game {                //1
@@ -130,9 +130,16 @@ class Game {                //1
 
   resetBtn() {                            //13
     chosen = document.getElementsByClassName('chosen');
+    let wrong = document.getElementsByClassName('wrong');
+
     while ( chosen.length > 0 ) {
       chosen[0].removeAttribute('disabled');
       chosen[0].classList.remove('chosen');
+    }
+
+    while ( wrong.length > 0 ) {
+      wrong[0].removeAttribute('disabled');
+      wrong[0].classList.remove('wrong');
     }
   }
 }
